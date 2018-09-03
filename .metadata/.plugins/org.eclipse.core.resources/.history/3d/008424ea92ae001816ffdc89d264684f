@@ -1,0 +1,128 @@
+package com.jpmorgan.codingtest.developerTest.services;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import com.jpmorgan.codingtest.developerTest.domain.Position;
+import com.jpmorgan.codingtest.developerTest.domain.TradeEvent;
+
+public class PositioningRulesServiceImpl {
+	
+	static List<TradeEvent> latestVersionTradeEvents = new ArrayList<TradeEvent>();
+
+	public static List<Position> processTradesToPosition(List<TradeEvent> tradeEvents){
+		List<Position> positions = new ArrayList<Position>();
+	   
+		Iterator<TradeEvent> tradeEventsIterator = tradeEvents.iterator();
+		while(tradeEventsIterator.hasNext()){
+			TradeEvent tradeEvent = tradeEventsIterator.next();
+			//Position position = new Position();
+			boolean isTradePresent = containsTradeEvent(latestVersionTradeEvents,tradeEvent.getAccountNumber(),tradeEvent.getTradeSecurity(),tradeEvent.getTradeId());
+			
+			if(!isTradePresent){
+				latestVersionTradeEvents.add(tradeEvent);
+			}
+			else{
+				List<TradeEvent> existingTrades = getExistingTradeEvent(latestVersionTradeEvents,tradeEvent.getTradeId());
+				for(TradeEvent existingTrade: existingTrades){
+					if(tradeEvent.getTradeVersion() > existingTrade.getTradeVersion()){
+						latestVersionTradeEvents.remove(existingTrade);
+						existingTrade.setQuantity(0);
+						latestVersionTradeEvents.add(existingTrade);
+						latestVersionTradeEvents.add(tradeEvent);
+					}
+					else
+						latestVersionTradeEvents.add(tradeEvent);
+				}
+			}
+
+		}
+		 Collection<TradeEvent> aggregatedTrades = tradeEvents.stream()
+		            .collect(Collectors.groupingBy(t -> getGroupingByKey(t),
+		                    Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparing(TradeEvent::getTradeVersion)), Optional::get)))
+		                    .values();	
+		printList(aggregatedTrades);
+		positions = getPositions(aggregatedTrades);
+		return positions; 
+	}
+	
+	private static Integer getQuantity(List<TradeEvent> tradeEvents){
+		Integer quantity=0;
+		List<TradeEvent> tempTradeEvents = new ArrayList<TradeEvent>();
+		for(TradeEvent t : tradeEvents){
+			if(tempTradeEvents.contains(t.getTradeId())){
+				//if(
+				
+			}else
+				tempTradeEvents.add(t);
+		}
+		return quantity;
+	}
+	
+	public static boolean containsPosition(final List<Position> list, final String accountNumber, final String securityIdentifier){
+		boolean isPresent = false;
+		for(TradeEvent t:list){
+			if(t.getAccountNumber().equals(accountNumber) && t.getTradeSecurity().equals(securityIdentifier)){
+			 isPresent = true;
+			}
+		}
+		return isPresent;	
+	}
+	
+	public static boolean containsTradeEvent(List<TradeEvent> list, String accountNumber, String securityIdentifier, Integer tradeId){
+		boolean isPresent = false;
+		for(TradeEvent t:list){
+			if(t.getAccountNumber().equals(accountNumber) && t.getTradeSecurity().equals(securityIdentifier) && t.getTradeId().equals(tradeId)){
+			 isPresent = true;
+			}
+		}
+		return isPresent;
+	}
+	
+	private static String getGroupingByKey(TradeEvent t){
+		return t.getAccountNumber()+"-"+t.getTradeSecurity()+"-"+t.getTradeId();
+		}
+	
+	private static List<TradeEvent> getExistingTradeEvent(List<TradeEvent> tradeEvents, Integer tradeId){
+		List<TradeEvent> trades = new ArrayList<TradeEvent>();
+		for(TradeEvent t:tradeEvents){
+			if(t.getTradeId().equals(tradeId)){
+				trades.add(t);
+			}
+		}
+		return trades;
+	}
+	
+	private static void printList(Collection<TradeEvent> list){
+		for(TradeEvent t : list){
+			System.out.println(t.getAccountNumber());
+			System.out.println(t.getTradeSecurity());
+			System.out.println(t.getTradeVersion());
+			System.out.println(t.getTradeId());
+			System.out.println(t.getQuantity());
+		}
+		
+	}
+	
+	private static List<Position> getPositions(Collection<TradeEvent> trades){
+		List<Position> positions = new ArrayList<Position>();
+		for(TradeEvent t: trades){
+			StringBuffer tradeIds = new StringBuffer();
+			Position position = new Position();
+			position.setAccount(t.getAccountNumber());
+			position.setInstrument(t.getTradeSecurity());
+			position.setQuantity(t.getQuantity());
+			position.setTrades(new StringBuffer().append(t.getTradeId()));
+			positions.add(position);
+			
+		}
+		return positions;
+	}
+
+}
+

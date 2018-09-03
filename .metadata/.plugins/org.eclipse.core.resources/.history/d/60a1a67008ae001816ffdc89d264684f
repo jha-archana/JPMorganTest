@@ -1,0 +1,6 @@
+package com.jpmorgan.codingtest.developerTest.util;
+
+public enum OperationType {
+	NEW,
+	AMEND,CANCEL;
+}

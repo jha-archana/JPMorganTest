@@ -1,0 +1,78 @@
+package com.jpmorgan.codingtest.developerTest.writer;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
+import com.jpmorgan.codingtest.developerTest.domain.Position;
+
+public class PositionAggregationWriter {
+	
+	public void writeToExcel(List<Position> positions, String excelFilePath) throws IOException {
+	    Workbook workbook = new HSSFWorkbook();
+	    Sheet sheet = workbook.createSheet();
+	    
+	    createHeaderRow(sheet);
+	 
+	    int rowCount = 0;
+	 
+	    for (Position position : positions) {
+	        Row row = sheet.createRow(++rowCount);
+	        writeAggregatedTradeEvents(position, row);
+	    }
+	 
+	    try (FileOutputStream outputStream = new FileOutputStream(excelFilePath)) {
+	        workbook.write(outputStream);
+	    }
+
+	}
+	
+	private void writeAggregatedTradeEvents(Position position, Row row) {
+	    Cell cell = row.createCell(0);
+	    cell.setCellValue(position.getAccount());
+	 
+	    cell = row.createCell(1);
+	    cell.setCellValue(position.getInstrument());
+	 
+	    cell = row.createCell(2);
+	    cell.setCellValue(position.getQuantity());
+	    
+	    cell = row.createCell(3);
+	    cell.setCellValue(position.getTrades().toString());
+	}
+	
+	private void createHeaderRow(Sheet sheet) {
+		
+		CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
+		Font font = sheet.getWorkbook().createFont();
+		font.setFontHeightInPoints((short) 16);
+		cellStyle.setFont(font);
+				
+		Row row = sheet.createRow(0);
+		Cell cellAccount = row.createCell(0);
+
+		cellAccount.setCellStyle(cellStyle);
+		cellAccount.setCellValue("Account");
+		
+		Cell cellInstrument = row.createCell(1);
+		cellInstrument.setCellStyle(cellStyle);
+		cellInstrument.setCellValue("Instrument");
+		
+		Cell cellQuantity = row.createCell(2);
+		cellQuantity.setCellStyle(cellStyle);
+		cellQuantity.setCellValue("Quantity");
+		
+		Cell cellTrades = row.createCell(3);
+		cellTrades.setCellStyle(cellStyle);
+		cellTrades.setCellValue("Trades");
+	}
+	
+}

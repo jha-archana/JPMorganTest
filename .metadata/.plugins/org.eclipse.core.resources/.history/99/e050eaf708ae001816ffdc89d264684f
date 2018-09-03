@@ -1,0 +1,8 @@
+package com.jpmorgan.codingtest.developerTest.util;
+
+public class Tuple {
+	private Integer tradeId;
+	private String accountNumber;
+	private String tradeSecurity;
+	
+}

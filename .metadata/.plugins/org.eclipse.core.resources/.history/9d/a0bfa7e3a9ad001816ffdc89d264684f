@@ -1,0 +1,13 @@
+package com.jpmorgan.codingtest.developerTest.writer;
+
+import java.util.List;
+
+import com.jpmorgan.codingtest.developerTest.domain.TradeEvent;
+
+public class PositionAggregationWriter {
+	
+	public void writeToExcel(List<TradeEvent> tradeEvents){
+		
+	}
+
+}

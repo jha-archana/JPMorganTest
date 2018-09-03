@@ -1,0 +1,37 @@
+package com.jpmorgan.codingtest.developerTest;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import com.jpmorgan.codingtest.developerTest.domain.Position;
+import com.jpmorgan.codingtest.developerTest.domain.TradeEvent;
+import com.jpmorgan.codingtest.developerTest.services.PositioningRulesServiceImpl;
+import com.jpmorgan.codingtest.developerTest.writer.PositionAggregationWriter;
+import com.poiji.bind.Poiji;
+
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DeveloperTestApplication {
+
+	public static void main(String[] args) {
+		//SpringApplication.run(DeveloperTestApplication.class, args);
+		
+		List<TradeEvent> tradeEvents = Poiji.fromExcel(new File("/Users/sandeep/Documents/Archu/jpmorganTest/TradeEventInput.xlsx"), TradeEvent.class);
+		tradeEvents.size();
+
+		PositioningRulesServiceImpl PositioningRulesServiceImpl = new PositioningRulesServiceImpl();
+		//List<Position> positions = PositioningRulesServiceImpl.processTradesToPosition(tradeEvents);
+		//System.out.println("positions size=="+positions.size());
+		System.out.println("Int==" + 3 + (-1));
+		
+		PositionAggregationWriter positionAggregationWriter = new PositionAggregationWriter();
+		try {
+			//positionAggregationWriter.writeToExcel(positions, "/Users/sandeep/Documents/Archu/jpmorganTest/TradeAggregationOutput.xls");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

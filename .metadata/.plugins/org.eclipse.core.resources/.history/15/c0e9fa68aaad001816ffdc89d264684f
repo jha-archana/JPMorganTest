@@ -1,0 +1,29 @@
+package com.jpmorgan.codingtest.developerTest.writer;
+
+import java.io.IOException;
+import java.util.List;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
+import com.jpmorgan.codingtest.developerTest.domain.TradeEvent;
+
+public class PositionAggregationWriter {
+	
+	public void writeToExcel(List<TradeEvent> tradeEvents, String excelFilePath) throws IOException {
+	    Workbook workbook = new HSSFWorkbook();
+	    Sheet sheet = workbook.createSheet();
+	 
+	    int rowCount = 0;
+	 
+	    for (TradeEvent tradeEvent : tradeEvents) {
+	        Row row = sheet.createRow(++rowCount);
+	        writeBook(aBook, row);
+	    }
+	 
+	    try (FileOutputStream outputStream = new FileOutputStream(excelFilePath)) {
+	        workbook.write(outputStream);
+	    }
+
+}

@@ -1,0 +1,39 @@
+package com.jpmorgan.codingtest.developerTest.domain;
+
+import java.util.List;
+
+public class Position {
+	
+	private String account;
+	private String Instrument;
+	private Integer quantity;
+	private List<Integer> trades;
+	
+	
+	public String getAccount() {
+		return account;
+	}
+	public void setAccount(String account) {
+		this.account = account;
+	}
+	public String getInstrument() {
+		return Instrument;
+	}
+	public void setInstrument(String instrument) {
+		Instrument = instrument;
+	}
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+	public List<Integer> getTrades() {
+		return trades;
+	}
+	public void setTrades(List<Integer> trades) {
+		this.trades = trades;
+	}
+
+	
+}

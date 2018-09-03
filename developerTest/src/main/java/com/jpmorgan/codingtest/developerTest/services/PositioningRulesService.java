@@ -1,0 +1,12 @@
+package com.jpmorgan.codingtest.developerTest.services;
+
+import java.util.List;
+
+import com.jpmorgan.codingtest.developerTest.domain.Position;
+import com.jpmorgan.codingtest.developerTest.domain.TradeEvent;
+
+public interface PositioningRulesService {
+	
+	public List<Position> processTradesToPosition(List<TradeEvent> trades);
+	
+}

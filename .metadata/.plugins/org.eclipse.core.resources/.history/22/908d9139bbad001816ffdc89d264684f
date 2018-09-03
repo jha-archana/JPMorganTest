@@ -1,0 +1,34 @@
+package com.jpmorgan.codingtest.developerTest;
+
+import java.io.File;
+import java.util.List;
+
+import com.jpmorgan.codingtest.developerTest.domain.TradeEvent;
+import com.jpmorgan.codingtest.developerTest.writer.PositionAggregationWriter;
+import com.poiji.bind.Poiji;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DeveloperTestApplication {
+	
+	@Autowired
+	PositionAggregationWriter positionAggregationWriter;
+
+	public static void main(String[] args) {
+		//SpringApplication.run(DeveloperTestApplication.class, args);
+		
+		List<TradeEvent> tradeEvents = Poiji.fromExcel(new File("/Users/sandeep/Documents/Archu/jpmorganTest/TradeEventInput.xlsx"), TradeEvent.class);
+		tradeEvents.size();
+
+		// 2
+		TradeEvent tradeEvent = tradeEvents.get(0);
+		System.out.println(tradeEvent.getTradeDirection());
+		try{
+		positionAggregationWriter.writeToExcel(tradeEvents,"/Users/sandeep/Documents/Archu/jpmorganTest/TradeOutput.xlsx");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+}

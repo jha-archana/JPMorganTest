@@ -1,0 +1,5 @@
+package com.jpmorgan.codingtest.developerTest.services;
+
+public interface PositioningRulesService {
+
+}

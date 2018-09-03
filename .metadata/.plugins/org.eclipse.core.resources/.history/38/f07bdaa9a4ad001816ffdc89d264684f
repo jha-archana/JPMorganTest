@@ -1,0 +1,58 @@
+package com.jpmorgan.codingtest.developerTest.domain;
+
+public class TradeEvent {
+
+	private Integer tradeId;
+	private Integer tradeVersion;
+	private String tradeSecurity;
+	private Integer shareQuantity;
+	private String tradeDirection;
+	private String accountNumber;
+	private String operation;
+	
+	
+	public Integer getTradeId() {
+		return tradeId;
+	}
+	public void setTradeId(Integer tradeId) {
+		this.tradeId = tradeId;
+	}
+	public Integer getTradeVersion() {
+		return tradeVersion;
+	}
+	public void setTradeVersion(Integer tradeVersion) {
+		this.tradeVersion = tradeVersion;
+	}
+	public String getTradeSecurity() {
+		return tradeSecurity;
+	}
+	public void setTradeSecurity(String tradeSecurity) {
+		this.tradeSecurity = tradeSecurity;
+	}
+	public Integer getShareQuantity() {
+		return shareQuantity;
+	}
+	public void setShareQuantity(Integer shareQuantity) {
+		this.shareQuantity = shareQuantity;
+	}
+	public String getTradeDirection() {
+		return tradeDirection;
+	}
+	public void setTradeDirection(String tradeDirection) {
+		this.tradeDirection = tradeDirection;
+	}
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	public String getOperation() {
+		return operation;
+	}
+	public void setOperation(String operation) {
+		this.operation = operation;
+	}
+	
+	
+}

@@ -1,0 +1,102 @@
+package com.jpmorgan.codingtest.developerTest.domain;
+
+import com.poiji.annotation.ExcelCellName;
+
+public class TradeEvent {
+
+	@ExcelCellName("TradeID") 
+	private Integer tradeId;
+	
+	@ExcelCellName("Version")
+	private Integer tradeVersion;
+	
+	@ExcelCellName("Security Identifier")
+	private String tradeSecurity;
+	
+	@ExcelCellName("Trade quantity")
+	private Integer quantity;
+	
+	@ExcelCellName("Trade Direction")
+	private String tradeDirection;
+	
+	@ExcelCellName("Account")
+	private String accountNumber;
+	
+	@ExcelCellName("Operation")
+	private String operation;
+	
+	
+	public Integer getTradeId() {
+		return tradeId;
+	}
+	public void setTradeId(Integer tradeId) {
+		this.tradeId = tradeId;
+	}
+	public Integer getTradeVersion() {
+		return tradeVersion;
+	}
+	public void setTradeVersion(Integer tradeVersion) {
+		this.tradeVersion = tradeVersion;
+	}
+	public String getTradeSecurity() {
+		return tradeSecurity;
+	}
+	public void setTradeSecurity(String tradeSecurity) {
+		this.tradeSecurity = tradeSecurity;
+	}
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+	public String getTradeDirection() {
+		return tradeDirection;
+	}
+	public void setTradeDirection(String tradeDirection) {
+		this.tradeDirection = tradeDirection;
+	}
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	public String getOperation() {
+		return operation;
+	}
+	public void setOperation(String operation) {
+		this.operation = operation;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((accountNumber == null) ? 0 : accountNumber.hashCode());
+		result = prime * result + ((tradeSecurity == null) ? 0 : tradeSecurity.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TradeEvent other = (TradeEvent) obj;
+		if (accountNumber == null) {
+			if (other.accountNumber != null)
+				return false;
+		} else if (!accountNumber.equals(other.accountNumber))
+			return false;
+		if (tradeSecurity == null) {
+			if (other.tradeSecurity != null)
+				return false;
+		} else if (!tradeSecurity.equals(other.tradeSecurity))
+			return false;
+		return true;
+	}
+	
+}

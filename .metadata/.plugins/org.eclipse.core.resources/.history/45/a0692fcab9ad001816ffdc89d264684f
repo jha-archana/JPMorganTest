@@ -1,0 +1,45 @@
+package com.jpmorgan.codingtest.developerTest.writer;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
+import com.jpmorgan.codingtest.developerTest.domain.TradeEvent;
+
+public class PositionAggregationWriter {
+	
+	public void writeToExcel(List<TradeEvent> tradeEvents, String excelFilePath) throws IOException {
+	    Workbook workbook = new HSSFWorkbook();
+	    Sheet sheet = workbook.createSheet();
+	 
+	    int rowCount = 0;
+	 
+	    for (TradeEvent tradeEvent : tradeEvents) {
+	        Row row = sheet.createRow(++rowCount);
+	        writeAggregatedTradeEvents(tradeEvent, row);
+	    }
+	 
+	    try (FileOutputStream outputStream = new FileOutputStream(excelFilePath)) {
+	        workbook.write(outputStream);
+	    }
+
+	}
+	
+	private void writeAggregatedTradeEvents(TradeEvent tradeEvent, Row row) {
+	    Cell cell = row.createCell(1);
+	    cell.setCellValue(tradeEvent.getTradeId());
+	 
+	    cell = row.createCell(2);
+	    cell.setCellValue(tradeEvent.getTradeDirection());
+	 
+	    cell = row.createCell(3);
+	    cell.setCellValue(tradeEvent.getQuantity());
+	}
+	
+}

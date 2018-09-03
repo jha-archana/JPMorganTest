@@ -1,0 +1,54 @@
+package com.jpmorgan.codingtest.developerTest.domain;
+
+import java.util.List;
+
+public class Position implements Comparable<Position>{
+	
+	private String account;
+	private String instrument;
+	private Integer quantity;
+	private StringBuffer trades;
+	
+	public Position(){
+		
+	}
+	
+	public Position(String account, String instrument, Integer quantity, StringBuffer trades){
+		this.account= account;
+		this.instrument=instrument;
+		this.quantity=quantity;
+		this.trades=trades;
+		
+	}
+	
+	public String getAccount() {
+		return account;
+	}
+	public void setAccount(String account) {
+		this.account = account;
+	}
+	public String getInstrument() {
+		return instrument;
+	}
+	public void setInstrument(String instrument) {
+		this.instrument = instrument;
+	}
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+	public StringBuffer getTrades() {
+		return trades;
+	}
+	public void setTrades(StringBuffer trades) {
+		this.trades = trades;
+	}
+
+	@Override
+	public int compareTo(Position position){
+	  return this.account.compareTo(position.account);
+	}
+	
+}

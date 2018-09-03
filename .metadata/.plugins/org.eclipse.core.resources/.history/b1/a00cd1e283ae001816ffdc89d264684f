@@ -1,0 +1,29 @@
+package com.jpmorgan.codingtest.developerTest;
+
+import java.io.File;
+import java.util.List;
+
+import com.jpmorgan.codingtest.developerTest.domain.Position;
+import com.jpmorgan.codingtest.developerTest.domain.TradeEvent;
+import com.jpmorgan.codingtest.developerTest.services.PositioningRulesServiceImpl;
+import com.poiji.bind.Poiji;
+
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DeveloperTestApplication {
+
+	public static void main(String[] args) {
+		//SpringApplication.run(DeveloperTestApplication.class, args);
+		
+		List<TradeEvent> tradeEvents = Poiji.fromExcel(new File("/Users/sandeep/Documents/Archu/jpmorganTest/TradeEventInput.xlsx"), TradeEvent.class);
+		tradeEvents.size();
+
+		PositioningRulesServiceImpl PositioningRulesServiceImpl = new PositioningRulesServiceImpl();
+		List<Position> positions = PositioningRulesServiceImpl.processTradesToPosition(tradeEvents);
+		
+		
+		PositionAggregationWriter positionAggregationWriter = new PositionAggregationWriter();
+		positionAggregationWriter.writeToExcel(positions);
+	}
+}

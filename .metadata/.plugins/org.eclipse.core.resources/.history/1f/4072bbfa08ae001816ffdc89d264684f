@@ -1,0 +1,28 @@
+package com.jpmorgan.codingtest.developerTest.util;
+
+public class Tuple {
+	private Integer tradeId;
+	private String accountNumber;
+	private String tradeSecurity;
+	
+	public Integer getTradeId() {
+		return tradeId;
+	}
+	public void setTradeId(Integer tradeId) {
+		this.tradeId = tradeId;
+	}
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	public String getTradeSecurity() {
+		return tradeSecurity;
+	}
+	public void setTradeSecurity(String tradeSecurity) {
+		this.tradeSecurity = tradeSecurity;
+	}
+	
+	
+}
